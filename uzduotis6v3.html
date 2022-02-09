@@ -116,26 +116,27 @@
     }
     
     #NumberField {
-        Padding: 10px;
+        Padding: 1px;
         width: 80%;
         background-color: transparent;
         border: solid transparent;
         text-align: right;
         color: white;
-        margin-right: 10px;
+        margin-right: 5px;
         margin-top: 10px;
-        margin-left: 40px;
+        margin-left: 60px;
         font-size: 50px;
         letter-spacing: 0.2em;
     }
     
     #NumberFieldMini {
-        Padding: 0px;
+        Padding: 2px;
         width: 80%;
-        background-color: rgba(255, 0, 0, 0.233);
+        height: 20px;
+        background-color: transparent;
         border: solid transparent;
         text-align: right;
-        color: rgba(255, 255, 255, 0.774);
+        color: rgba(255, 255, 255, 0.514);
         margin-right: 1px;
         margin-top: 8px;
         margin-left: 50px;
@@ -149,72 +150,94 @@
     var num = [];
     var ans;
 
-    function FirstValue(val) {
+    function Delete() {
+        document.getElementById('NumberField').innerHTML = '';
 
+        num = [];
+        a = '';
+        b = '';
+    }
+
+    function FirstValue(val) {
+        document.getElementById("NumberField").style.fontSize = "50px";
+        document.getElementById("NumberField").style.color = "white";
         num.push(val);
 
         if (num.length != 1) {
             a = '';
-            document.getElementById('display').innerHTML = a; // clearing the screen.
+            document.getElementById('NumberField').innerHTML = a;
         }
 
 
         for (i = 0; i < num.length; i++) {
 
-            a = a + num[i]; // concatenate the elements of the array "num" into a single string, which will be displayed on the screen
+            a = a + num[i];
 
         }
 
-        document.getElementById('display').innerHTML = a; // displaying the concatenated string
+        document.getElementById('NumberField').innerHTML = a;
     }
 
-    // when the user presses "=", function "equalTo()" is called 
     function Sum() {
-        document.getElementById('display').innerHTML = '';
+        document.getElementById('NumberField').innerHTML = '';
 
         for (i = 0; i < num.length; i++) {
 
-            b += num[i]; // concatenating the array "num" into a single string
+            b += num[i];
         }
-
+        document.getElementById('NumberFieldMini').innerHTML = b;
         ans = eval(b);
-
-        document.getElementById('display').innerHTML = ans; // result display
-
-        while (num.length > 0) {
-            num.pop(); // emptying the array "num"
-        }
-        //document.getElementById('display').innerHTML = num.push(ans);
-        //num.push(ans.toString());
-
-
+        Delete();
+        num.push(ans.toString());
+        document.getElementById('NumberField').innerHTML = ans;
     }
 
-    function Delete() {
-        document.getElementById('display').innerHTML = '';
+    function Remove() {
+        num.splice(-1);
+        var numTemp = num.join('');
+        document.getElementById('NumberField').innerHTML = numTemp;
+    }
 
-        while (num.length > 0) {
-            num.pop(); // emptying the array "num"
+    function Sqrt() {
+        var x = document.getElementById('NumberField').innerHTML;
+        var sqrtTemp = parseInt(x);
+        document.getElementById('NumberFieldMini').innerHTML = x + "^2";
+        var checker = /\D/.test(x);
+        if (checker == false) {
+            console.log(x);
+
+            var sqrt = sqrtTemp * sqrtTemp;
+            console.log(sqrt);
+
+            Delete();
+            num.push(sqrt.toString());
+
+            document.getElementById('NumberField').innerHTML = sqrt;
+        } else {
+            Delete();
+            document.getElementById('NumberFieldMini').innerHTML = 'Error';
+            document.getElementById("NumberField").style.fontSize = "20px";
+            document.getElementById("NumberField").style.color = "red";
+            document.getElementById('NumberField').innerHTML = 'Warning: Do not use symbols';
         }
 
-        a = '';
-        b = '';
     }
 </script>
 
 <body>
     <div class="Calculator">
         <div class="Display" id="display">
-
+            <div id="NumberFieldMini"></div>
+            <div id="NumberField"></div>
         </div>
         <div class="Buttons">
             <button class="delete" onclick="Delete()">DELETE</button>
-            <button class="mygtukas">und</button>
-            <button class="mygtukas">und</button>
+            <button class="mygtukas" onclick="Remove()">←</button>
+            <button class="mygtukas" onclick="Sqrt()">Sqrt</button>
             <button class="mygtukas" onclick="FirstValue('7')">7</button>
             <button class="mygtukas" onclick="FirstValue('8')">8</button>
             <button class="mygtukas" onclick="FirstValue('9')">9</button>
-            <button class="mygtukas" onclick="Division('/')">/</button>
+            <button class="mygtukas" onclick="FirstValue('/')">/</button>
             <button class="mygtukas" onclick="FirstValue('4')">4</button>
             <button class="mygtukas" onclick="FirstValue('5')">5</button>
             <button class="mygtukas" onclick="FirstValue('6')">6</button>
