@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <style>
     .Calculator {
         width: 400px;
@@ -125,8 +126,8 @@
         margin-right: 5px;
         margin-top: 10px;
         margin-left: 60px;
-        font-size: 50px;
-        letter-spacing: 0.2em;
+        font-size: 40px;
+        letter-spacing: 0.1em;
     }
     
     #NumberFieldMini {
@@ -144,23 +145,25 @@
         letter-spacing: 0.2em;
     }
 </style>
+
 <script>
+    var num = [];
     var a = '';
     var b = '';
-    var num = [];
     var ans;
 
     function Delete() {
         document.getElementById('NumberField').innerHTML = '';
-
         num = [];
         a = '';
         b = '';
     }
 
     function FirstValue(val) {
+        //Pakartotinai nustatomi parametrai is CCS, kad nepasikeitų po Sqrt Error Message
         document.getElementById("NumberField").style.fontSize = "50px";
         document.getElementById("NumberField").style.color = "white";
+
         num.push(val);
 
         if (num.length != 1) {
@@ -179,42 +182,61 @@
     }
 
     function Sum() {
-        document.getElementById('NumberField').innerHTML = '';
 
         for (i = 0; i < num.length; i++) {
 
             b += num[i];
         }
+
         document.getElementById('NumberFieldMini').innerHTML = b;
+
         ans = eval(b);
+
         Delete();
+
         num.push(ans.toString());
+
         document.getElementById('NumberField').innerHTML = ans;
+
     }
 
     function Remove() {
+
         num.splice(-1);
+
         var numTemp = num.join('');
+
         document.getElementById('NumberField').innerHTML = numTemp;
     }
 
     function Sqrt() {
+
         var x = document.getElementById('NumberField').innerHTML;
+
         var sqrtTemp = parseInt(x);
+
         document.getElementById('NumberFieldMini').innerHTML = x + "^2";
+
         var checker = /\D/.test(x);
+
         if (checker == false) {
+
             console.log(x);
 
             var sqrt = sqrtTemp * sqrtTemp;
+
             console.log(sqrt);
 
             Delete();
+
             num.push(sqrt.toString());
 
             document.getElementById('NumberField').innerHTML = sqrt;
+
         } else {
+
             Delete();
+
             document.getElementById('NumberFieldMini').innerHTML = 'Error';
             document.getElementById("NumberField").style.fontSize = "20px";
             document.getElementById("NumberField").style.color = "red";
