@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<style>
+    @font-face {
+        font-family: "TitleFont";
+        src: url("./Font/zai_SeagullFelt-tipPen.otf");
+    }
+    
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #ChessBoard {
+        display: block;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        border: solid 4px rgb(192, 152, 100);
+    }
+    /* The Modal (background) */
+    
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 5;
+        padding-top: 100px;
+        left: auto;
+        top: auto;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    /* Modal Content */
+    
+    .modal-content {
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #fefefe;
+        margin: auto;
+        width: 600px;
+        padding: 20px;
+        border: 1px solid #888;
+        text-align: center;
+        border-radius: 10px;
+    }
+    
+    #WinnerText {
+        font-size: 40px;
+        color: black;
+        letter-spacing: 0.2em;
+        margin-bottom: 0px;
+    }
+    
+    #RestartButton {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 5px 25px 5px 25px;
+        border: solid 0px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        background-color: rgb(223, 223, 223);
+    }
+    
+    #RestartButton:active {
+        transition-delay: 0.15s;
+        background-color: rgb(139, 139, 139);
+    }
+    
+    #title {
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 8px;
+        font-size: 50px;
+        margin-bottom: 10px;
+        margin-top: -2%;
+        letter-spacing: 0.2em;
+        color: black;
+        font-weight: 500;
+        background-color: rgba(243, 182, 50, 0.897);
+        width: 110%;
+        margin-left: -5%;
+        border-bottom: solid 2px black;
+        font-family: "TitleFont", Arial;
+    }
+    
+    #extrapad {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        width: 650px;
+        height: 635px;
+        border-radius: 25px;
+        background-color: rgba(0, 0, 0, 0.178);
+    }
+    
+    body {
+        background-color: rgb(230, 230, 230);
+    }
+</style>
+
+<body>
+    <div class="container">
+        <p id="title">Basic Chess Logic</p>
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <p id="WinnerText">TEST</p>
+                <button id="RestartButton" onclick="RestartGame()">Restart the game!</button>
+            </div>
+        </div>
+        <div id="extrapad">
+            <canvas onclick="onClick()" id="ChessBoard" width="604px" height="604px">
+        </div>    
+        </div>
+    </body>
+<script>
+ 
+ //Variables
+    var modal = document.getElementById("myModal");
+    var canvas = document.getElementById("ChessBoard");
+    var ctx = canvas.getContext('2d');
+    const rows = 8;
+    const cols = 8;
+    var squareNumber = rows * cols;
+    var square = canvas.height / rows;
+
+    var curX = -1;
+    var curY = -1;
+
+	var chessPieces = {
+        '-1': 'test',
+        '0': '♟',
+        '1': '♞',
+        '2': '♝',
+        '3': '♜',
+        '4': '♛',
+        '5': '♚',
+    }
+    var white = 0;
+    var black = 1;
+    var playerTeam = white;
+    const Empty = '-1';
+    const Pawn = '0';
+    const Knight = '1';
+    const Bishop = '2';
+    const Tower = '3';
+    const Queen = '4';
+    const King = '5';
+    const invalid = 0;
+    const valid = 1;
+    const validKill = 2;
+
+    class Board 
+    {
+        constructor() 
+        {
+            this.tiles = [];
+ 
+            this.tiles.push([
+                new Tile(Tower, black),
+                new Tile(Knight, black),
+                new Tile(Bishop, black),
+                new Tile(Queen, black),
+                new Tile(King, black),
+                new Tile(Bishop, black),
+                new Tile(Knight, black),
+                new Tile(Tower, black)
+            ]);
+ 
+            this.tiles.push([
+                new Tile(Pawn, black),
+                new Tile(Pawn, black),
+                new Tile(Pawn, black),
+                new Tile(Pawn, black),
+                new Tile(Pawn, black),
+                new Tile(Pawn, black),
+                new Tile(Pawn, black),
+                new Tile(Pawn, black)
+            ]);
+ 
+            for (let i = 0; i < 4; i++) 
+            {
+                this.tiles.push([
+                    new Tile(Empty, Empty),
+                    new Tile(Empty, Empty),
+                    new Tile(Empty, Empty),
+                    new Tile(Empty, Empty),
+                    new Tile(Empty, Empty),
+                    new Tile(Empty, Empty),
+                    new Tile(Empty, Empty),
+                    new Tile(Empty, Empty),
+                ]);
+            }
+ 
+            this.tiles.push([
+                new Tile(Pawn, white),
+                new Tile(Pawn, white),
+                new Tile(Pawn, white),
+                new Tile(Pawn, white),
+                new Tile(Pawn, white),
+                new Tile(Pawn, white),
+                new Tile(Pawn, white),
+                new Tile(Pawn, white)
+            ]);
+ 
+            this.tiles.push([
+                new Tile(Tower, white),
+                new Tile(Knight, white),
+                new Tile(Bishop, white),
+                new Tile(Queen, white),
+                new Tile(King, white),
+                new Tile(Bishop, white),
+                new Tile(Knight, white),
+                new Tile(Tower, white)
+            ]);
+
+            this.validMoves = [];
+        for (let i = 0; i < 8; i++) {
+            this.validMoves.push([
+                invalid,
+                invalid,
+                invalid,
+                invalid,
+                invalid,
+                invalid,
+                invalid,
+                invalid
+            ]);
+        }
+        }
+        resetvalidMoves() {
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                this.validMoves[i][j] = invalid;
+            }
+        }
+    }
+}
+    class Tile 
+    {
+        constructor(type, team) 
+        {
+            this.type = type;
+            this.team = team;
+        }
+    }
+ 
+    board = new Board();
+
+ 
+    //Drawing of the BOARD
+function drawBoard() 
+    {
+ 
+        for (let i = 0; i < rows; i++) 
+        {
+            for (let j = 0; j < cols; j++) 
+            {
+                setTile(i, j);
+            }
+        }
+    }
+ 
+function setTile(x, y)
+    {
+        ctx.fillStyle = "white";
+        if ((x + y) % 2 === 1) 
+        {
+            ctx.fillStyle = "black";
+        }
+        ctx.fillRect(square * x, square * y, square, square);
+    }
+ 
+ 
+    //Actions of clicks
+function onClick() 
+    {       
+        let ChessBoardX = ChessBoard.getBoundingClientRect().left;
+        let ChessBoardY = ChessBoard.getBoundingClientRect().top;
+ 
+        let x = Math.floor((event.clientX - ChessBoardX) / square);
+        let y = Math.floor((event.clientY - ChessBoardY) / square);
+        
+        
+        if (CanMove(x, y) === true) {
+            if (board.tiles[y][x].type === King) {
+                Winner();
+            }
+            moveSelectedPiece(x, y);
+            
+            changeTeam();
+        } else {
+
+        curX = x;
+        curY = y;
+        }
+        repaint();
+    }
+
+//Possible movements
+function CanMove(x, y){
+    if (board.validMoves[y][x] === valid || board.validMoves[y][x] == validKill){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+function possiblePlays() {
+    if (curX < 0 || curY < 0){ 
+        return;
+        }
+        
+    let tile = board.tiles[curY][curX];
+    if (tile.team == Empty|| tile.team !== playerTeam) return;
+    board.resetvalidMoves();
+    drawTile(curX, curY);
+
+    
+    switch (tile.type){
+        case Pawn:
+        PawnLogic(curX, curY);
+        break;
+        case Tower:
+        TowerLogic(curX, curY);
+        break;
+        case Bishop:
+        BishopLogic(curX, curY);
+        break;
+        case Knight:
+        KnightLogic(curX, curY);
+        break;
+        case Queen:
+        QueenLogic(curX, curY);
+        break;
+        case King:
+        KingLogic(curX,curY);
+        break;
+    }
+}
+
+function checkPossibleMove(x, y) {
+
+    if (board.tiles[y][x].team !== Empty) return false;
+  
+    board.validMoves[y][x] = valid;
+    drawPossibleTiles(x, y);
+    return true;
+}
+
+function checkCapture(x, y) {
+    if (board.tiles[y][x].team != getOppositeTeam(playerTeam)) return false;
+
+    board.validMoves[y][x] = validKill;
+    drawKill(x, y);
+    return true;
+}
+
+function getOppositeTeam(team) {
+    if (team === white) return black;
+    else if (team === black) return white;
+    else return Empty;
+}
+
+function checkValidCapture(x, y) {
+    if (board.validMoves[y][x] === validKill) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//Piece movements
+function PawnLogic(curX, curY) {
+    let direction;
+
+    if (playerTeam === white){
+        direction = -1;
+    } else {
+        direction = 1;
+    }
+    if (curY === 1 || curY === 6) {
+        checkPossibleMove(curX, curY + 2 * direction);
+    }
+
+    checkPossibleMove(curX, curY + direction);
+
+    if (curX - 1 >= 0) checkCapture(curX - 1, curY + direction);
+    if (curX <7 && curX + 1 >= 0) checkCapture(curX + 1, curY + direction);
+}
+
+function TowerLogic(){
+    for (let i = 1; curY - i >= 0; i++) {
+        if (playAllowed(curX, curY - i)){
+            break;
+        } 
+    }
+
+    for (let i = 1; curX + i <= 8 - 1; i++) {
+        if (playAllowed(curX + i, curY)) {
+            break;
+        } 
+    }
+    for (let i = 1; curY + i <= 8 - 1; i++) {
+        if (playAllowed(curX, curY + i)) {
+            break;
+        } 
+    }
+    for (let i = 1; curX - i >= 0; i++) {
+        if (playAllowed(curX - i, curY)) {
+            break;
+        } 
+    }
+}
+
+function BishopLogic(curX, curY) {
+
+    for (let i = 1; curX + i <= 8 - 1 && curY - i >= 0; i++) {
+        if (playAllowed(curX + i, curY - i)){
+            break;
+        }
+    }
+    for (let i = 1; curX + i <= 8 - 1 && curY + i <= 8 - 1; i++) {
+        if (playAllowed(curX + i, curY + i)){ 
+        break;
+		}
+    }
+    for (let i = 1; curX - i >= 0 && curY + i <= 8 - 1; i++) {
+        if (playAllowed(curX - i, curY + i)) { 
+        break;
+		}
+    }
+    for (let i = 1; curX - i >= 0 && curY - i >= 0; i++) {
+        if (playAllowed(curX - i, curY - i)){ 
+        break;
+		}
+        }
+}
+
+function KnightLogic(curX, curY) {
+    if (curX - 2 >= 0) {
+        if (curY - 1 >= 0){
+        playAllowed(curX - 2, curY - 1);
+        }
+        if (curY + 1 <= 8 - 1){
+			playAllowed(curX - 2, curY + 1);
+		}
+    }
+    if (curX - 1 >= 0) {
+        if (curY - 2 >= 0){
+			playAllowed(curX - 1, curY - 2);
+	}
+        if (curY + 2 <= 8 - 1) {
+			playAllowed(curX - 1, curY + 2);
+    }
+	}
+
+    if (curX + 1 <= 8 - 1) {
+        if (curY - 2 >= 0){
+			playAllowed(curX + 1, curY - 2);
+		}
+        if (curY + 2 <= 8 - 1) 
+        {
+            playAllowed(curX + 1, curY + 2);
+        }
+        }
+
+    if (curX + 2 <= 8 - 1) {
+        if (curY - 1 >= 0) {
+            playAllowed(curX + 2, curY - 1);
+        }
+        
+        if (curY + 1 <= 8 - 1){
+			playAllowed(curX + 2, curY + 1);
+    }
+	}
+}
+
+function QueenLogic(curX, curY) {
+    TowerLogic(curX, curY);
+    BishopLogic(curX, curY);
+}
+
+function KingLogic(curX, curY) {
+    for (let i = -1; i <= 1; i++) {
+        if (curY + i < 0 || curY + i > 8 - 1) continue;
+
+        for (let j = -1; j <= 1; j++) {
+            if (curX + j < 0 || curX + j > 8 - 1) continue;
+            if (i == 0 && j == 0) continue;
+
+            playAllowed(curX + j, curY + i);
+        }
+    }
+}
+
+function playAllowed(x, y) {
+    if (checkCapture(x, y)) return true;
+    return !checkPossibleMove(x, y);
+}
+ 
+function drawPieces() 
+    {
+        for (let i = 0; i < rows; i++) 
+        {
+            for (let j = 0; j < cols; j++) 
+            {
+                if (board.tiles[i][j].team === Empty)
+                {
+                    continue;
+                }
+                //TEAM COLORS
+                if (board.tiles[i][j].team === white) 
+                {
+                    ctx.fillStyle = 'rgb(255, 69, 0)';
+                } 
+                else 
+                {
+                    ctx.fillStyle = 'rgb(65, 105, 225)';
+                }
+                
+                ctx.font = "65px Sans Serif";
+                var type = board.tiles[i][j].type;
+                if(chessPieces[type] != Empty)
+                {
+                    ctx.fillText(chessPieces[type], 75 * (j + 1 / 8), 75 * (i + 4 / 5));
+                }
+            }
+        }
+    }
+  
+
+function moveSelectedPiece(x, y) 
+    {
+    board.tiles[y][x].type = board.tiles[curY][curX].type;
+    board.tiles[y][x].team = board.tiles[curY][curX].team;
+    board.tiles[curY][curX].type = Empty;
+    board.tiles[curY][curX].team = Empty;
+    curX = -1;
+    curY = -1;
+    board.resetvalidMoves();
+    }
+ 
+function repaint() 
+    {
+        drawBoard();
+        possiblePlays();
+        drawPieces();
+    }
+
+    //Changes Player contolled team
+function changeTeam(){
+    if (playerTeam == white) {
+        playerTeam = black;
+    } else {
+        playerTeam = white;
+    }
+}
+//Draws actions 
+
+function drawTile(x, y) 
+    {
+        ctx.fillStyle = 'rgb(128, 233, 99)';
+        ctx.fillRect(square * x, square * y, square, square);
+    }
+  
+function drawPossibleTiles(x,y){
+        ctx.strokeStyle = 'rgb(128, 200, 204)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(square * (x + 0.5), square * (y + 0.5), square / 8, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.stroke();
+}
+
+function drawKill(x,y){
+        ctx.strokeStyle = 'rgb(230, 0, 0)';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(square * (x + 0.5), square * (y + 0.5), square / 2.1, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.stroke();
+
+
+}
+//Declares Winner & activates game restrat
+
+function Winner() {
+  modal.style.display = "block";
+  if (playerTeam == white){
+      document.getElementById('WinnerText').innerHTML = 'White Team Won!';
+          } else {
+            document.getElementById('WinnerText').innerHTML = 'Black Team Won!';
+          }
+}
+
+function RestartGame(){
+    window.location.reload();
+}
+ 
+//calling of the functions
+drawBoard(canvas, rows, cols);
+drawPieces();
+ 
+</script>
+ 
+</html>

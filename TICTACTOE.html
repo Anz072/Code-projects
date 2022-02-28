@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIC TAC TOE</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Shizuru');
+    @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200&family=Montserrat:wght@100&family=Open+Sans+Condensed:wght@300&family=Shizuru&display=swap');
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    body {
+        background-color: #000000;
+        background-image: linear-gradient(147deg, #000000 0%, #434343 74%);
+    }
+    
+    #gamebody {
+        display: none;
+    }
+    
+    #container {
+        display: grid;
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+        grid-template-columns: repeat(3, 1fr);
+        height: 350px;
+        width: 350px;
+        cursor: pointer;
+    }
+    
+    .element {
+        font-family: 'Montserrat', 'Arial';
+        height: 114px;
+        font-size: 100px;
+        color: white;
+        text-align: center;
+    }
+    
+    .borderline-0 {
+        border: solid 3px white;
+    }
+    
+    .borderline-1 {
+        border: solid white;
+        border-width: 0px 3px 0px 3px;
+    }
+    
+    .borderline-2 {
+        border: solid white;
+        border-width: 3px 0px 3px 0px;
+    }
+    
+    #menuBox {
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+        width: 300px;
+        height: 300px;
+        border-radius: 0px;
+        background-color: rgba(255, 255, 255, 0.959);
+        border: solid 2px black;
+        display: block;
+    }
+    
+    #menuBoxContent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    /* The Modal (background) */
+    
+    .pop-up-background {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    
+    .pop-up-box {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 30px;
+        border: 1px solid #888;
+        width: 30%;
+        border-radius: 10px;
+    }
+    
+    #boxContent {
+        margin-top: 0px;
+        font-size: 45px;
+        letter-spacing: 0.1em;
+        text-align: center;
+        color: black;
+        font-family: 'Shizuru', cursive, 'Arial';
+    }
+    
+    #box1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .button1 {
+        background-color: initial;
+        background-image: linear-gradient(#8614f8 0, #760be0 100%);
+        border-radius: 5px;
+        border-style: none;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'Open Sans Condensed', sans-serif;
+        font-size: 20px;
+        font-weight: 500;
+        height: 60px;
+        line-height: 60px;
+        margin-left: 10px;
+        outline: 0;
+        text-align: center;
+        transition: all .3s cubic-bezier(.05, .03, .35, 1);
+        width: 190px;
+    }
+    
+    .button1:hover {
+        opacity: .7;
+    }
+    /* CSS */
+    
+    .button2 {
+        align-items: center;
+        background-color: initial;
+        background-image: linear-gradient(#464d55, #25292e);
+        border-width: 0;
+        box-sizing: border-box;
+        color: white;
+        cursor: pointer;
+        display: inline-flex;
+        flex-direction: column;
+        font-family: 'Arial';
+        font-size: 20px;
+        letter-spacing: 0.2em;
+        height: 40px;
+        justify-content: center;
+        outline: none;
+        overflow: hidden;
+        padding: 22px 55px;
+        text-align: center;
+        text-decoration: none;
+        transition: all 100ms;
+    }
+    
+    .button2:hover {
+        box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
+        opacity: .85;
+    }
+    
+    #select-level {
+        display: flex;
+        background-color: rgba(129, 129, 129, 0.068);
+        padding: 10px 5px;
+        border-radius: 5px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    
+    .button3 {
+        margin-left: 3px;
+        margin-right: 3px;
+        font-size: 15px;
+        font-weight: 300;
+        color: black;
+        font-family: 'Dosis', 'Arial';
+        padding: 10px 30px;
+        background: none;
+        border: solid 1px;
+        cursor: pointer;
+    }
+    
+    .button4 {
+        cursor: pointer;
+        margin-left: 3px;
+        margin-right: 3px;
+        font-size: 15px;
+        color: black;
+        font-family: 'Dosis', 'Arial';
+        font-weight: 600;
+        padding: 10px 30px;
+        background: rgba(165, 233, 64, 0.932);
+        border: solid 1px transparent;
+    }
+    
+    h1 {
+        border: 5px double black;
+        padding: 0px 30px;
+        color: black;
+        font-size: 40px;
+        font-family: 'Open Sans Condensed', 'Arial';
+    }
+    
+    .normalbtn {
+        font-size: 12px;
+        resize: none;
+    }
+    
+    #levelid {
+        margin-top: 20px;
+        font-size: 18px;
+        width: 350px;
+        color: white;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-family: 'Montserrat', 'Arial';
+    }
+</style>
+
+<body>
+    <div id="gameMenu">
+        <div id="menuBox">
+            <div id="menuBoxContent">
+                <h1>TIC TAC TOE</h1>
+                <div id="select-level">
+                    <button class="button4" id="levelEasy" onclick="levelSelect(this.id)">Easy</button>
+                    <button class="button3" id="levelNormal" onclick="levelSelect(this.id)">Normal</button>
+                    <button class="button3" id="levelHard" onclick="levelSelect(this.id)">Hard</button>
+                </div>
+                <button class="button2" id="startGame" onclick="start()">Start!</button>
+            </div>
+        </div>
+    </div>
+    <div id="pop-up" class="pop-up-background">
+        <div class="pop-up-box">
+            <p id="boxContent">Undefined Won!</p>
+            <div id="box1">
+                <button class="button1" id="restartButton" onclick="tryAgain()">Try again!</button>
+                <button class="button1" id="menuButton" onclick="backToMenu()">Menu</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="gamebody">
+        <div id="container">
+            <div class="element" id="0"></div>
+            <div class="element borderline-1" id="1"></div>
+            <div class="element" id="2"></div>
+            <div class="element borderline-2" id="3"></div>
+            <div class="element borderline-0" id="4"></div>
+            <div class="element borderline-2" id="5"></div>
+            <div class="element" id="6"></div>
+            <div class="element borderline-1" id="7"></div>
+            <div class="element" id="8"></div>
+        </div>
+        <div id="levelid">Difficulty: Easy</div>
+    </div>
+</body>
+
+<script>
+    var popUp = document.getElementById('pop-up');
+    var boxContent = document.getElementById('boxContent');
+    var gameMenu = document.getElementById("gameMenu");
+    var gamebody = document.getElementById("gamebody");
+    var levelid = document.getElementById("levelid");
+    //gameState is the gameboard
+    var gameState = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    var iter = 0;
+    var human = 'X';
+    var computer = 'O';
+    var id;
+    var difficulty = 1;
+
+    //takes board location
+    const blocks = document.querySelectorAll('.element');
+    var messageName = 'Undefined';
+
+
+
+    function start() {
+        gameMenu.style.display = 'none';
+        gamebody.style.display = 'block';
+        for (var i = 0; i < blocks.length; i++) {
+            blocks[i].innerHTML = '';
+            blocks[i].addEventListener('click', wasClicked, false);
+        }
+    }
+    //Defines what box was clicked and if it's empty does a turn
+    function wasClicked(square) {
+        id = square.target.id;
+        if ((gameState[id] !== 'X') && (gameState[id] !== 'O')) {
+            turn(id, human);
+            if (!Draw()) {
+                turn(bestSpot(), computer);
+            }
+        }
+        computerSpot();
+    }
+    //turn logic
+    function turn(id, player) {
+        //displays move
+        if (player == human) {
+            document.getElementById(id).innerHTML = 'X';
+        }
+        if (player == computer) {
+            document.getElementById(id).innerHTML = 'O';
+        }
+        gameState[id] = player;
+
+        let victory = checkForVictory(gameState, player);
+
+        //if it is not a draw checks for victory and accordingly gives a popup
+        if (!Draw()) {
+            if (victory == true) {
+                switch (player) {
+                    case 'O':
+                        messageName = 'COMPUTER';
+                        break;
+                    case 'X':
+                        messageName = 'YOU'
+                }
+                popUp.style.display = 'block';
+                boxContent.innerText = ` ${messageName} WON!`;
+            }
+        } else if ((Draw()) && (victory === false)) { //If it's a draw and no win
+            popUp.style.display = 'block';
+            boxContent.innerText = `IT'S A TIE :(`;
+        } else if ((Draw()) && (victory === true)) { //If it's a draw and win
+            switch (player) {
+                case 'O':
+                    messageName = 'COMPUTER';
+                    break;
+                case 'X':
+                    messageName = 'YOU'
+            }
+            popUp.style.display = 'block';
+            boxContent.innerText = ` ${messageName} WON!`;
+        }
+    }
+    //Victory logic, checks all winning combinations
+    function checkForVictory(gameState, player) {
+        if (
+            (gameState[0] == player && gameState[1] == player && gameState[2] == player) ||
+            (gameState[3] == player && gameState[4] == player && gameState[5] == player) ||
+            (gameState[6] == player && gameState[7] == player && gameState[8] == player) ||
+            (gameState[0] == player && gameState[3] == player && gameState[6] == player) ||
+            (gameState[1] == player && gameState[4] == player && gameState[7] == player) ||
+            (gameState[2] == player && gameState[5] == player && gameState[8] == player) ||
+            (gameState[0] == player && gameState[4] == player && gameState[8] == player) ||
+            (gameState[2] == player && gameState[4] == player && gameState[6] == player)
+        ) {
+            return true;
+
+        } else {
+
+            return false;
+        }
+
+    }
+    //Draw function logic - checks if any empty spaces are left in gameState
+    function Draw() {
+        var countertilldraw = 0;
+        for (var i = 0; i < gameState.length; i++) {
+            if ((gameState[i] === 'X') || (gameState[i] === 'O')) {
+                countertilldraw++;
+            }
+        }
+        if ((countertilldraw == 9)) {
+            return true;
+        }
+        return false;
+    }
+    //Restart game
+    function tryAgain() {
+        gameState = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        iter = 0;
+        countertilldraw = 0;
+        popUp.style.display = 'none';
+        start();
+    }
+    //determines if you want to play against easy AI or hard AI
+    function levelSelect(level) {
+        var element = document.getElementById(level);
+        console.log(element);
+        if (level == 'levelEasy') {
+            if (element.classList.contains('button4')) {
+                document.getElementById('levelHard').classList.remove("button3");
+                document.getElementById('levelHard').classList.add("button3");
+                element.classList.remove("button4");
+                element.classList.add("button3");
+            } else if (element.classList.contains('button3')) {
+                document.getElementById('levelHard').classList.remove("button4");
+                document.getElementById('levelHard').classList.add("button3");
+                element.classList.remove("button3");
+                element.classList.add("button4");
+            }
+            difficulty = 1;
+            levelid.innerText = 'Difficulty: Easy';
+        } else if (level == 'levelHard') {
+            if (element.classList.contains('button4')) {
+                document.getElementById('levelEasy').classList.remove("button4");
+                document.getElementById('levelEasy').classList.add("button3");
+                document.getElementById('levelNormal').classList.remove("button4");
+                document.getElementById('levelNormal').classList.add("button3");
+                element.classList.remove("button4");
+                element.classList.add("button3");
+            } else if (element.classList.contains('button3')) {
+                document.getElementById('levelEasy').classList.remove("button4");
+                document.getElementById('levelEasy').classList.add("button3");
+                document.getElementById('levelNormal').classList.remove("button4");
+                document.getElementById('levelNormal').classList.add("button3");
+                element.classList.remove("button3");
+                element.classList.add("button4");
+            }
+            difficulty = 2;
+            levelid.innerText = 'Difficulty: Hard';
+        } else if (level == 'levelNormal') {
+            if (element.classList.contains('button4')) {
+                document.getElementById('levelEasy').classList.remove("button4");
+                document.getElementById('levelEasy').classList.add("button3");
+                document.getElementById('levelHard').classList.remove("button4");
+                document.getElementById('levelHard').classList.add("button3");
+                element.classList.remove("button4");
+                element.classList.add("button3");
+            } else if (element.classList.contains('button3')) {
+                document.getElementById('levelEasy').classList.remove("button4");
+                document.getElementById('levelEasy').classList.add("button3");
+                document.getElementById('levelHard').classList.remove("button4");
+                document.getElementById('levelHard').classList.add("button3");
+                element.classList.remove("button3");
+                element.classList.add("button4");
+            }
+            difficulty = 3;
+            levelid.innerText = 'Difficulty: Normal';
+        }
+    }
+    //Displays initial menu
+    function backToMenu() {
+        gameState = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        iter = 0;
+        countertilldraw = 0;
+        popUp.style.display = 'none';
+        gameMenu.style.display = 'block';
+        gamebody.style.display = 'none';
+    }
+    //Computer move
+    function bestSpot() {
+        if (difficulty == 1) {
+            return computerSpot();
+        } else if (difficulty == 2) {
+            var index = minimax(gameState, computer).index;
+            return index;
+        } else if (difficulty == 3) {
+            var a = Math.random(1);
+            if (a > 0.45) {
+                var index = minimax(gameState, computer).index;
+                return index;
+            } else {
+                return computerSpot();
+            }
+        }
+    }
+
+    //Computer easy mode --- Picks a random position to place the "O"
+    function computerSpot() {
+        let arr = [];
+        for (var i = 0; i < gameState.length; i++) {
+            if ((gameState[i] !== 'X') && (gameState[i] !== 'O')) {
+                arr.push(i)
+                    //return i;
+            }
+        }
+        console.log(arr);
+        var z = arr[Math.floor(Math.random() * arr.length)];
+        return z;
+
+    }
+
+    //Computer hard mode --- Implemented MINIMAX ALGORITHM 
+    function EmptySpaces(reboard) {
+        return reboard.filter(s => s != 'X' && s != 'O');
+    }
+
+    function minimax(reboard, player) {
+        iter++;
+        let array = EmptySpaces(reboard);
+        if (checkForVictory(reboard, human)) {
+            return {
+                score: -10
+            };
+        } else if (checkForVictory(reboard, computer)) {
+            return {
+                score: 10
+            };
+        } else if (array.length === 0) {
+            return {
+                score: 0
+            };
+        }
+
+        var moves = [];
+        for (var i = 0; i < array.length; i++) {
+            var move = {};
+            move.index = reboard[array[i]];
+            reboard[array[i]] = player;
+
+            if (player == computer) {
+                var g = minimax(reboard, human);
+                move.score = g.score;
+            } else {
+                var g = minimax(reboard, computer);
+                move.score = g.score;
+            }
+            reboard[array[i]] = move.index;
+            moves.push(move);
+        }
+
+        var bestMove;
+        if (player === computer) {
+            var bestScore = -10000;
+            for (var i = 0; i < moves.length; i++) {
+                if (moves[i].score > bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        } else {
+            var bestScore = 10000;
+            for (var i = 0; i < moves.length; i++) {
+                if (moves[i].score < bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }
+        return moves[bestMove];
+    }
+</script>
+
+</html>

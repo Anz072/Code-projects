@@ -77,6 +77,20 @@
 </style>
 
 <body>
+    <div class="block">
+        <h3>Number Sorter with my algorithm</h3>
+        <p class="capt">Define size of array:</p>
+        <input placeholder="40" id="Input">
+        <button onclick="LogicForNumbersWithActualAlgorithm()">Display My Random array & Sort it!</button>
+        <p class="banners">Randomly generated number array:</p>
+        <p id="RandomArray">Yet to be defined</p>
+        <p class="banners">Sorted from lowest to highest value array:</p>
+        <p id="RandomArraySort"></p>
+        <p class="banners">min value of array:</p>
+        <p id="RandomArrayMin"></p>
+        <p class="banners">max value of array:</p>
+        <p id="RandomArrayMax"></p>
+    </div>
 
     <div class="block">
         <h3>Number Sorter</h3>
@@ -158,6 +172,63 @@
         console.log('Time: ' + Timed);
 
     }
+
+    function LogicForNumbersWithActualAlgorithm() {
+
+        var ArrayLength = document.getElementById('Input').value;
+        var RandomNumberArray = [];
+        var minimalNumber = 0;
+        var maxNumber = 0;
+        var temp = 0;
+
+        //Random array is generated
+        for (var i = 0; i < ArrayLength; i++) {
+            RandomNumberArray.push(Math.round(Math.random() * ArrayLength))
+        }
+
+        console.log(ArrayLength);
+        console.log('Random number array: ' + RandomNumberArray);
+        document.getElementById('RandomArray').innerText = RandomNumberArray;
+
+
+        //Look for minimal number value in the array
+        for (var i = 0; i < ArrayLength; i++) {
+
+            //check for values
+            for (var j = 1; j < ArrayLength; j++) {
+                //min value
+                if (RandomNumberArray[j] < RandomNumberArray[minimalNumber]) {
+                    minimalNumber = j;
+                }
+
+                //max value
+                if (RandomNumberArray[j] > RandomNumberArray[maxNumber]) {
+                    maxNumber = j;
+                }
+            }
+
+            //sorting random array
+            for (var k = 0; k < ArrayLength; k++) {
+                if (RandomNumberArray[k] > RandomNumberArray[i]) {
+                    temp = RandomNumberArray[k];
+                    RandomNumberArray[k] = RandomNumberArray[i];
+                    RandomNumberArray[i] = temp;
+                }
+            }
+
+        }
+        //Values displayed on console and screen
+        document.getElementById('RandomArrayMin').innerText = RandomNumberArray[minimalNumber];
+        document.getElementById('RandomArrayMax').innerText = RandomNumberArray[maxNumber];
+        document.getElementById('RandomArraySort').innerText = RandomNumberArray;
+
+        console.log('Min vlaue: ' + RandomNumberArray[minimalNumber]);
+        console.log('Max vlaue: ' + RandomNumberArray[maxNumber]);
+        console.log('min to max: ' + RandomNumberArray);
+    }
+
+
+
 
     function LogicForLetters() {
 

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game!</title>
+</head>
+<style>
+    .mainboard {
+        width: 660px;
+        height: 660px;
+        border: solid 2px red;
+    }
+    
+    .boardboxesgrid {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        justify-items: center;
+        border: solid 1px white;
+    }
+    
+    .boardbox {
+        border: solid 1px blue;
+        width: 80px;
+        height: 80px;
+        font-size: 60px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="mainboard">
+        <div class="boardboxesgrid" id="grid">
+            <div class="boardbox" id="8a"></div>
+            <div class="boardbox" id="8b"></div>
+            <div class="boardbox" id="8c"></div>
+            <div class="boardbox" id="8d"></div>
+            <div class="boardbox" id="8e"></div>
+            <div class="boardbox" id="8f"></div>
+            <div class="boardbox" id="8g"></div>
+            <div class="boardbox" id="8h"></div>
+            <div class="boardbox" id="7a"></div>
+            <div class="boardbox" id="7b"></div>
+            <div class="boardbox" id="7c"></div>
+            <div class="boardbox" id="7d"></div>
+            <div class="boardbox" id="7e"></div>
+            <div class="boardbox" id="7f"></div>
+            <div class="boardbox" id="7g"></div>
+            <div class="boardbox" id="7h"></div>
+            <div class="boardbox" id="6a"></div>
+            <div class="boardbox" id="6b"></div>
+            <div class="boardbox" id="6c"></div>
+            <div class="boardbox" id="6d"></div>
+            <div class="boardbox" id="6e"></div>
+            <div class="boardbox" id="6f"></div>
+            <div class="boardbox" id="6g"></div>
+            <div class="boardbox" id="6h"></div>
+            <div class="boardbox" id="5a"></div>
+            <div class="boardbox" id="5b"></div>
+            <div class="boardbox" id="5c"></div>
+            <div class="boardbox" id="5d"></div>
+            <div class="boardbox" id="5e"></div>
+            <div class="boardbox" id="5f"></div>
+            <div class="boardbox" id="5g"></div>
+            <div class="boardbox" id="5h"></div>
+            <div class="boardbox" id="4a"></div>
+            <div class="boardbox" id="4b"></div>
+            <div class="boardbox" id="4c"></div>
+            <div class="boardbox" id="4d"></div>
+            <div class="boardbox" id="4e"></div>
+            <div class="boardbox" id="4f"></div>
+            <div class="boardbox" id="4g"></div>
+            <div class="boardbox" id="4h"></div>
+            <div class="boardbox" id="3a"></div>
+            <div class="boardbox" id="3b"></div>
+            <div class="boardbox" id="3c"></div>
+            <div class="boardbox" id="3d"></div>
+            <div class="boardbox" id="3e"></div>
+            <div class="boardbox" id="3f"></div>
+            <div class="boardbox" id="3g"></div>
+            <div class="boardbox" id="3h"></div>
+            <div class="boardbox" id="2a"></div>
+            <div class="boardbox" id="2b"></div>
+            <div class="boardbox" id="2c"></div>
+            <div class="boardbox" id="2d"></div>
+            <div class="boardbox" id="2e"></div>
+            <div class="boardbox" id="2f"></div>
+            <div class="boardbox" id="2g"></div>
+            <div class="boardbox" id="2h"></div>
+            <div class="boardbox" id="1a"></div>
+            <div class="boardbox" id="1b"></div>
+            <div class="boardbox" id="1c"></div>
+            <div class="boardbox" id="1d"></div>
+            <div class="boardbox" id="1e"></div>
+            <div class="boardbox" id="1f"></div>
+            <div class="boardbox" id="1g"></div>
+            <div class="boardbox" id="1h"></div>
+        </div>
+    </div>
+
+</body>
+
+<script src="jquery-3.6.0.js"></script>
+
+<script>
+    //Variables
+    var GamePiece;
+    var gridItems = document.getElementsByClassName("boardbox");
+    var tempvalue;
+    var isBlack;
+    //Chess pieces
+    var chessPieces = {
+        'white': {
+            'king': '&#9812;',
+            'queen': '&#9813;',
+            'tower': '&#9814;',
+            'bishop': '&#9815;',
+            'knight': '&#9816;',
+            'pawn': '&#9817;'
+        },
+        'black': {
+            'king': '&#9818;',
+            'queen': '&#9819;',
+            'tower': '&#9820;',
+            'bishop': '&#9821;',
+            'knight': '&#9822;',
+            'pawn': '&#9823;'
+        }
+    };
+
+    //Spawn chess pieces at the start
+    function PiecesLayout() {
+        //Spawn white
+        document.getElementById('8a').innerHTML = chessPieces.white.tower;
+        document.getElementById('8b').innerHTML = chessPieces.white.knight;
+        document.getElementById('8c').innerHTML = chessPieces.white.bishop;
+        document.getElementById('8d').innerHTML = chessPieces.white.queen;
+        document.getElementById('8e').innerHTML = chessPieces.white.king;
+        document.getElementById('8h').innerHTML = chessPieces.white.tower;
+        document.getElementById('8g').innerHTML = chessPieces.white.knight;
+        document.getElementById('8f').innerHTML = chessPieces.white.bishop;
+        document.getElementById('7a').innerHTML = chessPieces.white.pawn;
+        document.getElementById('7b').innerHTML = chessPieces.white.pawn;
+        document.getElementById('7c').innerHTML = chessPieces.white.pawn;
+        document.getElementById('7d').innerHTML = chessPieces.white.pawn;
+        document.getElementById('7e').innerHTML = chessPieces.white.pawn;
+        document.getElementById('7f').innerHTML = chessPieces.white.pawn;
+        document.getElementById('7g').innerHTML = chessPieces.white.pawn;
+        document.getElementById('7h').innerHTML = chessPieces.white.pawn;
+        //Spawn black
+        document.getElementById('1a').innerHTML = chessPieces.black.tower;
+        document.getElementById('1b').innerHTML = chessPieces.black.knight;
+        document.getElementById('1c').innerHTML = chessPieces.black.bishop;
+        document.getElementById('1d').innerHTML = chessPieces.black.queen;
+        document.getElementById('1e').innerHTML = chessPieces.black.king;
+        document.getElementById('1h').innerHTML = chessPieces.black.tower;
+        document.getElementById('1g').innerHTML = chessPieces.black.knight;
+        document.getElementById('1f').innerHTML = chessPieces.black.bishop;
+        document.getElementById('2a').innerHTML = chessPieces.black.pawn;
+        document.getElementById('2b').innerHTML = chessPieces.black.pawn;
+        document.getElementById('2c').innerHTML = chessPieces.black.pawn;
+        document.getElementById('2d').innerHTML = chessPieces.black.pawn;
+        document.getElementById('2e').innerHTML = chessPieces.black.pawn;
+        document.getElementById('2f').innerHTML = chessPieces.black.pawn;
+        document.getElementById('2g').innerHTML = chessPieces.black.pawn;
+        document.getElementById('2h').innerHTML = chessPieces.black.pawn;
+    }
+
+    PiecesLayout();
+
+    document.addEventListener('click', function(e) {
+        tempvalue = e.target.id;
+        GamePiece = document.getElementById(tempvalue).innerHTML;
+        //check if there's anything in place
+        if (GamePiece != '') {
+            console.log('Theres a piece!');
+            //Checking what piece it is
+            DeterminePiece();
+
+        } else {
+            console.log('Empty!');
+
+        }
+    }, false);
+
+    function DeterminePiece() {
+
+        switch (GamePiece) {
+            //black pieces
+            case '♟':
+                console.log('THATS A BLACK PAWN');
+                e = 0;
+                isBlack = true;
+                console.log('switchas: ' + e);
+                MovePawn();
+
+                break;
+            case '♜':
+                console.log('THATS A BLACK TOWER');
+                isBlack = true;
+                MoveTower();
+                break;
+            case '♞':
+                console.log('THATS A BLACK KNIGHT');
+                MoveKnight();
+                break;
+            case '♝':
+                console.log('THATS A BLACK BISHOP');
+                MoveBishop();
+                break;
+            case '♛':
+                console.log('THATS A BLACK QUEEN');
+                MoveQueen();
+                break;
+            case '♚':
+                console.log('THATS A BLACK KING');
+                MoveKing();
+                break;
+                //white pieces
+            case '♙':
+                console.log('THATS A WHITE PAWN');
+                MovePawn();
+                break;
+            case '♖':
+                console.log('THATS A WHITE TOWER');
+                break;
+            case '♘':
+                console.log('THATS A WHITE KNIGHT');
+                break;
+            case '♗':
+                console.log('THATS A WHITE BISHOP');
+                break;
+            case '♕':
+                console.log('THATS A WHITE QUEEN');
+                break;
+            case '♔':
+                console.log('THATS A WHITE KING');
+                break;
+        }
+    }
+
+    var e = 0;
+    var Tempvalue2Object;
+
+    function MovePawn() {
+        document.getElementById(tempvalue).innerHTML = '';
+        console.log('excecute movePawn');
+        var tempvalue2;
+        document.addEventListener('click', function(e) {
+            tempvalue2 = e.target.id;
+            console.log(tempvalue2);
+            document.getElementById(tempvalue2).innerHTML = chessPieces.black.pawn;
+        }, {
+            once: true
+        });
+
+    }
+
+    function MoveTower() {
+        document.getElementById(tempvalue).innerHTML = '';
+        console.log('excecute moveTower');
+        var tempvalue2;
+        document.addEventListener('click', function(e) {
+            tempvalue2 = e.target.id;
+            console.log(tempvalue2);
+            document.getElementById(tempvalue2).innerHTML = chessPieces.black.tower;
+        }, {
+            once: true
+        });
+    }
+
+    function MoveBishop() {
+        document.getElementById(tempvalue).innerHTML = '';
+        console.log('excecute moveTower');
+        var tempvalue2;
+        document.addEventListener('click', function(e) {
+            tempvalue2 = e.target.id;
+            console.log(tempvalue2);
+            document.getElementById(tempvalue2).innerHTML = chessPieces.black.bishop;
+        }, {
+            once: true
+        });
+    }
+
+    function MoveKnight() {
+        document.getElementById(tempvalue).innerHTML = '';
+        console.log('excecute moveTower');
+        var tempvalue2;
+        document.addEventListener('click', function(e) {
+            tempvalue2 = e.target.id;
+            console.log(tempvalue2);
+            document.getElementById(tempvalue2).innerHTML = chessPieces.black.knight;
+        }, {
+            once: true
+        });
+    }
+
+    function MoveQueen() {
+        document.getElementById(tempvalue).innerHTML = '';
+        console.log('excecute moveTower');
+        var tempvalue2;
+        document.addEventListener('click', function(e) {
+            tempvalue2 = e.target.id;
+            console.log(tempvalue2);
+            document.getElementById(tempvalue2).innerHTML = chessPieces.black.queen;
+        }, {
+            once: true
+        });
+    }
+
+    function MoveKing() {
+        document.getElementById(tempvalue).innerHTML = '';
+        console.log('excecute moveTower');
+        var tempvalue2;
+        document.addEventListener('click', function(e) {
+            tempvalue2 = e.target.id;
+            console.log(tempvalue2);
+            document.getElementById(tempvalue2).innerHTML = chessPieces.black.king;
+        }, {
+            once: true
+        });
+    }
+
+    function CC() {
+        console.log('in CC: ' + Tempvalue2Object);
+        switch (Tempvalue2Object) {
+            case '♟':
+            case '♜':
+            case '♞':
+            case '♟':
+                console.log('Dont try to stop your own team!');
+                break;
+        }
+    }
+</script>
+
+</html>
