@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // //Palindromai
+    // function palindrome(str) {
+    //     var arr1 = str.toLowerCase('');
+    //     var arr = arr1.replace(/[^0-9a-z]/gi, "");
+    //     //console.log(arr);
+    //     let reverseWord = [];
+    //     for (let i = arr.length - 1; i >= 0; i--) {
+    //         reverseWord.push(arr[i]);
+    //     }
+    //     if (arr == reverseWord.join('')) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+
+
+    // }
+
+    // console.log(palindrome("eye"));
+    // console.log(palindrome("almostomla"));
+    // console.log(palindrome("A man, a plan, a canal. Panama"));
+    // console.log(palindrome("Sir, I demand, I am a maid named Iris"));
+
+
+
+
+    // //FIRST
+    // function nextEdge(s1, s2) {
+    //     return (s1 + s2) - 1;
+    // }
+
+    // console.log(nextEdge(8, 10));
+    // console.log(nextEdge(7, 5));
+
+    // //SECOND
+    // function nameString(name) {
+    //     return newstr = name + 'Edabit';
+    // }
+
+
+    // console.log(nameString("Mubashir"));
+
+    // //THIRD
+    // function lessThan100(value1, value2) {
+    //     if ((value1 + value2) < 100) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+
+    // console.log(lessThan100(22, 15));
+
+    // FOURTH
+
+    // function addUp(val) {
+    //     var number = 0;
+    //     for (var i = 1; i <= val; i++) {
+    //         number += i;
+    //     }
+    //     return number;
+    // }
+
+    // console.log(addUp(4));
+
+
+    // //FIFTH
+
+    // // function binary(val) {
+    // //     return val.toString(2);
+    // // }
+
+    // function binary(decimal) {
+    //     if (decimal == '0') return '0';
+    //     var numb = decimal;
+    //     var binaryNumber = 0;
+    //     var binarystr = [];
+    //     while (numb >= 1) {
+    //         binaryNumber = numb % 2;
+    //         binarystr.push(binaryNumber);
+    //         numb = Math.floor(numb / 2);
+    //     }
+    //     return binarystr.reverse().join('');
+    // }
+
+    // console.log(binary(10));
+    // //console.log(binaryalt(10));
+
+    // //SIXTH
+    // function num_of_digits(val) {
+    //     var Numberlength = val.toString().replace(/\D/g, "").split('');
+    //     console.log(Numberlength);
+    //     var number = 0;
+    //     for (var i = 0; i < Numberlength.length; i++) {
+    //         number++;
+    //     }
+    //     return number;
+    // }
+    // console.log(num_of_digits(-1305981031));
+
+    // function sevenBoom(arr) {
+    //     var container = arr.join('').split('');
+    //     var sevenFound = false;
+    //     for (var i = 0; i < container.length; i++) {
+    //         if (container[i] == '7') {
+    //             sevenFound = true;
+    //             console.log(sevenFound);
+    //         }
+    //     }
+    //     if (sevenFound == true) {
+    //         return 'Boom!';
+    //     } else {
+    //         return "there is no 7 in the array";
+    //     }
+    // }
+
+
+    // console.log(sevenBoom([767, 55, 44, 32]));
+
+    // //8th
+
+    // function uncensor(censored, key) {
+    //     var censoredToArray = censored.split('');
+    //     var keyToArray = key.split('');
+    //     var index = 0;
+    //     console.log(keyToArray);
+
+    //     for (var i = 0; i < censoredToArray.length; i++) {
+    //         if (censoredToArray[i] == '*') {
+    //             censoredToArray[i] = keyToArray[index];
+    //             index++;
+    //         }
+    //     }
+    //     console.log(censoredToArray.join(''));
+    //     return censoredToArray.join('');
+    // }
+
+
+    // uncensor("Wh*r* d*d my v*w*ls g*?", "eeioeo");
+
+
+    // //9th
+
+    // function isFactorial(value) {
+    //     var factorial = 1;
+    //     for (var i = 2; i < value; i++) {
+    //         factorial *= i;
+    //         if (factorial == value) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
+    // console.log(isFactorial(24));
+    // console.log(isFactorial(27));
+
+    // var arr = [
+    //     [1, 6, 3, 7],
+    //     [9, 6, 9, 3],
+    //     [5, 6, 9]
+    // ]
+
+    // function wat(arr) {
+    //     var counter = 0;
+    //     var arr2 = [];
+    //     for (var i = 0; i < arr.length; i++) {
+    //         for (var j = 0; j < arr[i].length; j++) {
+    //             counter++;
+    //         }
+    //         arr2.push(arr[i][1]);
+    //     }
+    //     console.log(`Atlikta ${counter} Iteracijų(-os)`);
+    //     console.log(`Kiekvieno vidinio masyvo antras narys:`);
+    //     console.log(arr2);
+    // }
+
+    // wat(arr);
+
+    // 3. uzduotis susikurti kelis automobiliu objektus kurie turetu tokius parametrus:
+
+    //     Marke
+    // Modelis
+    // Metai
+    // Spalva
+    // Vidutines Kuro Sanaudos(100 km)
+    // Kuro tipas
+
+    // var car1 = {
+    //     marke: 'audi',
+    //     modelis: 'idk1',
+    //     metai: '2068',
+    //     spalva: 'raudona',
+    //     VKS: 8,
+    //     kuras: 'diesel',
+    //     kaina: function(price) {
+    //         return this.VKS * price[this.kuras];
+    //     }
+    // }
+    // var car3 = {
+    //     marke: 'bmw',
+    //     modelis: 'idk1',
+    //     metai: '2018',
+    //     spalva: 'raudona',
+    //     VKS: 9.2,
+    //     kuras: 'diesel'
+    // }
+    // var car2 = {
+    //     marke: 'audi',
+    //     modelis: 'idk1',
+    //     metai: '2068',
+    //     spalva: 'raudona',
+    //     VKS: 6,
+    //     kuras: 'gas'
+    // }
+
+    // // var FuelPrice = {
+    // //     diesel: 1.67,
+    // //     gasoline: 1.85,
+    // //     gas: 1.12
+    // // }
+
+    // // function PriceToDrive(car, FuelPrice) {
+    // //     var usage = car.VKS;
+    // //     var type;
+    // //     var price = 0;
+    // //     for (let i = 0; i < Object.keys(FuelPrice).length; i++) {
+    // //         if (car.kuras == Object.keys(FuelPrice)[i]) {
+    // //             type = Object.keys(FuelPrice)[i];
+    // //         }
+    // //     }
+    // //     price = usage * FuelPrice[type];
+    // //     return price;
+    // // }
+    // // console.log(PriceToDrive(car1, FuelPrice));
+    // // console.log(PriceToDrive(car2, FuelPrice));
+
+    // // console.log(car1.kaina(FuelPrice));
+
+    // var pavaruDeze = {
+
+    //     type: "Semi-Auto",
+
+    //     gears: 8
+
+    // }
+
+    // // sukurti funkcija i ja ateina masyvas ir prie kiekvienos masinos objekto masyve pridedam parametra kokinors, kuris taippat yra objektas
+
+    // function addition() {
+    //     var arr = [];
+    //     arr.push(car1, car2, car3);
+    //     console.log(arr);
+    //     for (let i = 0; i < arr.length; i++) {
+    //         arr[i].pavaruDeze = pavaruDeze;
+    //     }
+    //     console.log(arr);
+    // }
+
+    // addition();
+    arrayOfCars = [{
+        Marke: "Mercedes",
+        Modelis: "SL111",
+        Metai: 2015,
+        Spalva: "Pilka",
+        KuroSanaudos: 8.6,
+        KuroTipas: "Benzinas",
+    }, {
+        Marke: "Audi",
+        Modelis: "A4",
+        Metai: 2018,
+        Spalva: "Melyna",
+        KuroSanaudos: 7.2,
+        KuroTipas: "Dyzelinas"
+
+    }, {
+        Marke: "Fiat",
+        Modelis: "500",
+        Metai: 2012,
+        Spalva: "Zalia",
+        KuroSanaudos: 5.9,
+        KuroTipas: "Benzinas"
+    }, {
+        Marke: "Audi",
+        Modelis: 80,
+        Metai: 1987,
+        Spalva: "mėlyna",
+        KuroSanaudos: 9.2,
+        KuroTipas: "Benzinas",
+    }, {
+        Marke: "Ford",
+        Modelis: "Focus",
+        Metai: 1997,
+        Spalva: "žalia",
+        KuroSanaudos: 10.0,
+        KuroTipas: "Dujos",
+    }, {
+        Marke: "Volkswagen",
+        Modelis: "Passat",
+        Metai: 2005,
+        Spalva: "sidabrinė",
+        KuroSanaudos: 5.8,
+        KuroTipas: "Dyzelis",
+    }, {
+        Marke: "Toyota",
+        Modelis: "Corola",
+        Metai: 2007,
+        Spalva: "blue",
+        KuroSanaudos: 5,
+        KuroTipas: "Benzinas"
+    }, {
+        Marke: "Volvo",
+        Modelis: "S50",
+        Metai: 2012,
+        Spalva: "brown",
+        KuroSanaudos: 4,
+        KuroTipas: "Dyzelinas"
+    }, {
+        Marke: "Kia",
+        Modelis: "Ceed",
+        Metai: 2002,
+        Spalva: "Grey",
+        KuroSanaudos: 8,
+        KuroTipas: "Dujos"
+    }, {
+        Marke: "500",
+        Modelis: "fiat",
+        Metai: 2014,
+        Spalva: "balta",
+        KuroSanaudos: 7,
+        KuroTipas: "Benzinas"
+    }, {
+        Modelis: "Volkswagen",
+        Marke: "golf",
+        Metai: 2014,
+        Spalva: "balta",
+        KuroSanaudos: 6,
+        KuroTipas: "Dyzelinas"
+    }, {
+        Modelis: "Toyota",
+        Marke: "Sienna",
+        Metai: 2014,
+        Spalva: "bordo",
+        KuroSanaudos: 11,
+        KuroTipas: "Dujos"
+    }, {
+        Modelis: "BMW",
+        Marke: "420",
+        Metai: 2014,
+        Spalva: "juoda",
+        KuroSanaudos: 8,
+        KuroTipas: "Dyzelinas"
+    }, {
+        Marke: "Audi",
+        Modelis: "A6",
+        Metai: "2012",
+        Spalva: "Juoda",
+        KuroSanaudos: 7,
+        KuroTipas: "Dyzelinas"
+    }, {
+        Marke: "BMW",
+        Modelis: "5",
+        Metai: "2011",
+        Spalva: "Balta",
+        KuroSanaudos: 10,
+        KuroTipas: "Benzinas"
+    }, {
+        Marke: "Toyota",
+        Modelis: "Corolla",
+        Metai: "2019",
+        Spalva: "Raudona",
+        KuroSanaudos: 8,
+        KuroTipas: "Dujos"
+    }, {
+        Marke: "Mercedes Benz",
+        Modelis: "222",
+        Metai: "2020",
+        Spalva: "Juoda",
+        KuroSanaudos: 12,
+        KuroTipas: "Benzinas",
+    }];
+</script>
+
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .Calculator {
+        width: 400px;
+        height: 600px;
+        background-color: rgba(51, 51, 51, 0.438);
+        border: solid 3px black;
+        border-radius: 30px;
+    }
+    
+    .Display {
+        width: 380px;
+        height: 170px;
+        background-color: rgba(90, 90, 90, 0.137);
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        border-radius: 30px;
+    }
+    
+    .Buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        background-color: none;
+        justify-items: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .mygtukas {
+        width: 95px;
+        height: 79px;
+        border: solid 1px black;
+        background-color: rgba(151, 150, 150, 0.836);
+        color: white;
+        font-weight: 600;
+        font-size: 25px;
+        cursor: pointer;
+    }
+    
+    .suma {
+        width: 95px;
+        height: 79px;
+        border: solid 1px black;
+        background-color: rgba(151, 150, 150, 0.836);
+        color: white;
+        font-weight: 600;
+        font-size: 25px;
+        cursor: pointer;
+    }
+    
+    .suma:hover {
+        background-color: rgb(62, 60, 206);
+        ;
+        color: rgba(255, 255, 255, 0.719);
+        transition: 0.45s ease-in-out;
+    }
+    
+    .delete {
+        grid-column: span 2;
+        width: 190px;
+        border: solid 1px black;
+        background-color: rgba(151, 150, 150, 0.836);
+        color: blueviolet;
+        font-weight: 600;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    
+    .delete:hover {
+        background-color: rgb(206, 60, 60);
+        ;
+        color: rgba(255, 255, 255, 0.719);
+        transition: 0.45s ease-in-out;
+    }
+    
+    .mygtukasLB {
+        border-radius: 0px 0px 0px 30px;
+    }
+    
+    .Equals {
+        color: blueviolet;
+    }
+    
+    .mygtukasRB {
+        border-radius: 0px 0px 30px 0px;
+    }
+    
+    .mygtukas:hover {
+        background-color: rgba(175, 175, 175, 0.836);
+        color: rgba(0, 0, 255, 0.24);
+        transition: 0.45s ease-in-out;
+    }
+    
+    .mygtukas:active {
+        background-color: rgba(0, 0, 0, 0.979);
+    }
+    
+    .suma:active {
+        background-color: rgba(0, 0, 0, 0.979);
+    }
+    
+    .delete:active {
+        background-color: rgba(0, 0, 0, 0.979);
+    }
+    
+    #NumberField {
+        Padding: 1px;
+        width: 80%;
+        background-color: transparent;
+        border: solid transparent;
+        text-align: right;
+        color: white;
+        margin-right: 5px;
+        margin-top: 10px;
+        margin-left: 60px;
+        font-size: 40px;
+        letter-spacing: 0.1em;
+    }
+    
+    #NumberFieldMini {
+        Padding: 2px;
+        width: 80%;
+        height: 20px;
+        background-color: transparent;
+        border: solid transparent;
+        text-align: right;
+        color: rgba(255, 255, 255, 0.514);
+        margin-right: 1px;
+        margin-top: 8px;
+        margin-left: 50px;
+        font-size: 20px;
+        letter-spacing: 0.2em;
+    }
+</style>
+
+<script>
+    var num = [];
+    var a = '';
+    var b = '';
+    var ans;
+
+    function Delete() {
+        document.getElementById('NumberField').innerHTML = '';
+        num = [];
+        a = '';
+        b = '';
+    }
+
+    function FirstValue(val) {
+        //Pakartotinai nustatomi parametrai is CCS, kad nepasikeitų po Sqrt Error Message
+        document.getElementById("NumberField").style.fontSize = "50px";
+        document.getElementById("NumberField").style.color = "white";
+
+        num.push(val);
+
+        if (num.length != 1) {
+            a = '';
+            document.getElementById('NumberField').innerHTML = a;
+        }
+
+
+        for (i = 0; i < num.length; i++) {
+
+            a = a + num[i];
+
+        }
+
+        document.getElementById('NumberField').innerHTML = a;
+    }
+
+    function Sum() {
+
+        for (i = 0; i < num.length; i++) {
+
+            b += num[i];
+        }
+
+        document.getElementById('NumberFieldMini').innerHTML = b;
+
+        ans = eval(b);
+
+        Delete();
+
+        num.push(ans.toString());
+
+        document.getElementById('NumberField').innerHTML = ans;
+
+    }
+
+    function Remove() {
+
+        num.splice(-1);
+
+        var numTemp = num.join('');
+
+        document.getElementById('NumberField').innerHTML = numTemp;
+    }
+
+    function Sqrt() {
+
+        var x = document.getElementById('NumberField').innerHTML;
+
+        var sqrtTemp = parseInt(x);
+
+        document.getElementById('NumberFieldMini').innerHTML = x + "^2";
+
+        var checker = /\D/.test(x);
+
+        if (checker == false) {
+
+            console.log(x);
+
+            var sqrt = sqrtTemp * sqrtTemp;
+
+            console.log(sqrt);
+
+            Delete();
+
+            num.push(sqrt.toString());
+
+            document.getElementById('NumberField').innerHTML = sqrt;
+
+        } else {
+
+            Delete();
+
+            document.getElementById('NumberFieldMini').innerHTML = 'Error';
+            document.getElementById("NumberField").style.fontSize = "20px";
+            document.getElementById("NumberField").style.color = "red";
+            document.getElementById('NumberField').innerHTML = 'Warning: Do not use symbols';
+        }
+
+    }
+</script>
+
+<body>
+    <div class="Calculator">
+        <div class="Display" id="display">
+            <div id="NumberFieldMini"></div>
+            <div id="NumberField"></div>
+        </div>
+        <div class="Buttons">
+            <button class="delete" onclick="Delete()">DELETE</button>
+            <button class="mygtukas" onclick="Remove()">←</button>
+            <button class="mygtukas" onclick="Sqrt()">Sqrt</button>
+            <button class="mygtukas" onclick="FirstValue('7')">7</button>
+            <button class="mygtukas" onclick="FirstValue('8')">8</button>
+            <button class="mygtukas" onclick="FirstValue('9')">9</button>
+            <button class="mygtukas" onclick="FirstValue('/')">/</button>
+            <button class="mygtukas" onclick="FirstValue('4')">4</button>
+            <button class="mygtukas" onclick="FirstValue('5')">5</button>
+            <button class="mygtukas" onclick="FirstValue('6')">6</button>
+            <button class="mygtukas" onclick="FirstValue('*')">x</button>
+            <button class="mygtukas" onclick="FirstValue('1')">1</button>
+            <button class="mygtukas" onclick="FirstValue('2')">2</button>
+            <button class="mygtukas" onclick="FirstValue('3')">3</button>
+            <button class="mygtukas" onclick="FirstValue('-')">-</button>
+            <button class="mygtukas mygtukasLB" onclick="FirstValue('0')">0</button>
+            <button class="mygtukas" onclick="FirstValue('.')">.</button>
+            <button class="suma Equals" onclick="Sum()">=</button>
+            <button class="mygtukas mygtukasRB" onclick="FirstValue('+')">+</button>
+        </div>
+    </div>
+</body>
+
+</html>

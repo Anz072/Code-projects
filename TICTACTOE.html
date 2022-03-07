@@ -303,7 +303,9 @@
         if ((gameState[id] !== 'X') && (gameState[id] !== 'O')) {
             turn(id, human);
             if (!Draw()) {
-                turn(bestSpot(), computer);
+                if (!checkForVictory(gameState, human)) {
+                    turn(bestSpot(), computer);
+                }
             }
         }
         computerSpot();
@@ -323,7 +325,7 @@
 
         //if it is not a draw checks for victory and accordingly gives a popup
         if (!Draw()) {
-            if (victory == true) {
+            if (victory === true) {
                 switch (player) {
                     case 'O':
                         messageName = 'COMPUTER';
@@ -349,6 +351,7 @@
             boxContent.innerText = ` ${messageName} WON!`;
         }
     }
+
     //Victory logic, checks all winning combinations
     function checkForVictory(gameState, player) {
         if (

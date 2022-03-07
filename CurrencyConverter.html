@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency exchange</title>
+    <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
+</head>
+<style>
+    #line {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    
+    #obj {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        border: solid 1px;
+    }
+    
+    #result {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: 20px;
+    }
+</style>
+
+<body>
+    <h1> Plain Currency exchange, mate!</h1>
+    <div id="center">
+        <div id="line">
+            <input id="value">
+            <p>From:</p>
+            <select id="OrgCurrency"></select>
+            <p>To:</p>
+            <select id="NewCurrency"></select>
+            <button onclick="request()">Convert</button>
+        </div>
+    </div>
+    <div>
+        <p id="result">Result here</p>
+    </div>
+    <div id="obj">
+        <label>Last 7 days in relation to dollar(US)</label>
+        <div id="chartDiv" style="width:98%; height:360px; margin:0 auto;"></div>
+    </div>
+
+</body>
+<script>
+    // personal key
+    const apiKey = "107f1870-9b17-11ec-9528-dd89decb0470";
+
+    // url for latest values
+    const urlLatest = "https://freecurrencyapi.net/api/v2/latest?apikey=" + apiKey;
+
+    // url for historical data
+    var today = new Date().toISOString().slice(0, 10)
+    var seven = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    var sevenDaysAgo = seven.toISOString().slice(0, 10)
+    console.log(sevenDaysAgo);
+    const urlHistorical = `https://freecurrencyapi.net/api/v2/historical?apikey=${apiKey}&base_currency=USD&date_from=${sevenDaysAgo}&date_to=${today}`;
+    var dataLatest;
+
+
+    var dropbox1 = document.getElementById("OrgCurrency");
+    var dropbox2 = document.getElementById("NewCurrency");
+    var names = [];
+    var historical;
+    var latest;
+    var result = document.getElementById('result');
+    var input = document.getElementById('value');
+    var z = [];
+    var v = [];
+
+    // send a HTTP request to the API
+    async function Initial() { // If you need to call an API use async function
+        //fetches latest and historical currency data
+        const response = await fetch(urlLatest);
+
+        dataLatest = await response.json();
+
+        const response2 = await fetch(urlHistorical);
+
+        const dataHistorical = await response2.json();
+
+        //makes JSON data to JS objects for usability
+        latest = JSON.parse(JSON.stringify(dataLatest.data));
+        historical = JSON.parse(JSON.stringify(dataHistorical.data))
+
+        //makes array from values of an object
+        names = Object.getOwnPropertyNames(latest);
+
+        listMaker();
+    }
+
+
+
+
+
+    function listMaker() {
+        //push values to html list
+        console.log(names);
+        //dropbox1
+        for (let i = 0; i < names.length; i++) {
+            var opt = names[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            dropbox1.appendChild(el);
+        }
+        //dropbox2
+        for (let i = 0; i < names.length; i++) {
+            var opt2 = names[i];
+            var el2 = document.createElement("option");
+            el2.textContent = opt2;
+            el2.value = opt2;
+            dropbox2.appendChild(el2);
+        }
+    }
+
+
+    Initial();
+
+
+
+    function request() {
+        //Obtains first dropbox value 
+        var e = document.getElementById("OrgCurrency");
+        var orgCurrencyval = e.value;
+        //Obtains 2nd dropbox value
+        var e1 = document.getElementById("NewCurrency");
+        var newCurrencyval = e1.value;
+        //Calculations
+        var exchangeRate = (1 / latest[orgCurrencyval]) / (1 / latest[newCurrencyval]);
+        var conversion = input.value * exchangeRate;
+        //Display conversion
+        result.innerText = conversion.toFixed(2);
+
+        //Create a chart for the dropbox2 currency
+
+        //pulls numerical values from the object for specified value
+        z = Object.getOwnPropertyNames(historical);
+        v = Object.entries(historical).map(([key, value]) => value[newCurrencyval]);
+
+        var arr23 = [];
+        var obj = {}
+            //translate values to array with objects
+        for (let i = 0; i < z.length; i++) {
+            obj = {}
+            obj['date'] = z[i];
+            obj['val'] = v[i];
+            arr23.push(obj);
+        }
+        //convert to x and y values
+        var series = JSC.nest()
+            .key('date') // X values
+            .rollup('val') // Y values
+            .series(arr23); // Generate series
+
+        //draw chart
+        var chart = JSC.chart('chartDiv', {
+            type: 'vertical line',
+            defaultBox_boxVisible: false,
+            legend_visible: false,
+            series: series
+        });
+        chart.options({
+            legend_visible: false
+        }, {
+            label_text: "title text"
+        }, {
+            scales: {
+                xAxis: [{
+                    display: false //this will remove all the x-axis grid lines
+                }]
+            }
+        });
+    }
+</script>
+
+</html>
