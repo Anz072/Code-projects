@@ -170,13 +170,230 @@
     // console.log(isFactorial(24));
     // console.log(isFactorial(27));
 
-    var a = Math.random(1);
-    console.log(a);
-    if (a > 0.5) {
-        console.log('PENIS');
-    } else {
-        console.log('VAJAYJAY');
-    }
+    // var arr = [
+    //     [1, 6, 3, 7],
+    //     [9, 6, 9, 3],
+    //     [5, 6, 9]
+    // ]
+
+    // function wat(arr) {
+    //     var counter = 0;
+    //     var arr2 = [];
+    //     for (var i = 0; i < arr.length; i++) {
+    //         for (var j = 0; j < arr[i].length; j++) {
+    //             counter++;
+    //         }
+    //         arr2.push(arr[i][1]);
+    //     }
+    //     console.log(`Atlikta ${counter} Iteracijų(-os)`);
+    //     console.log(`Kiekvieno vidinio masyvo antras narys:`);
+    //     console.log(arr2);
+    // }
+
+    // wat(arr);
+
+    // 3. uzduotis susikurti kelis automobiliu objektus kurie turetu tokius parametrus:
+
+    //     Marke
+    // Modelis
+    // Metai
+    // Spalva
+    // Vidutines Kuro Sanaudos(100 km)
+    // Kuro tipas
+
+    // var car1 = {
+    //     marke: 'audi',
+    //     modelis: 'idk1',
+    //     metai: '2068',
+    //     spalva: 'raudona',
+    //     VKS: 8,
+    //     kuras: 'diesel',
+    //     kaina: function(price) {
+    //         return this.VKS * price[this.kuras];
+    //     }
+    // }
+    // var car3 = {
+    //     marke: 'bmw',
+    //     modelis: 'idk1',
+    //     metai: '2018',
+    //     spalva: 'raudona',
+    //     VKS: 9.2,
+    //     kuras: 'diesel'
+    // }
+    // var car2 = {
+    //     marke: 'audi',
+    //     modelis: 'idk1',
+    //     metai: '2068',
+    //     spalva: 'raudona',
+    //     VKS: 6,
+    //     kuras: 'gas'
+    // }
+
+    // // var FuelPrice = {
+    // //     diesel: 1.67,
+    // //     gasoline: 1.85,
+    // //     gas: 1.12
+    // // }
+
+    // // function PriceToDrive(car, FuelPrice) {
+    // //     var usage = car.VKS;
+    // //     var type;
+    // //     var price = 0;
+    // //     for (let i = 0; i < Object.keys(FuelPrice).length; i++) {
+    // //         if (car.kuras == Object.keys(FuelPrice)[i]) {
+    // //             type = Object.keys(FuelPrice)[i];
+    // //         }
+    // //     }
+    // //     price = usage * FuelPrice[type];
+    // //     return price;
+    // // }
+    // // console.log(PriceToDrive(car1, FuelPrice));
+    // // console.log(PriceToDrive(car2, FuelPrice));
+
+    // // console.log(car1.kaina(FuelPrice));
+
+    // var pavaruDeze = {
+
+    //     type: "Semi-Auto",
+
+    //     gears: 8
+
+    // }
+
+    // // sukurti funkcija i ja ateina masyvas ir prie kiekvienos masinos objekto masyve pridedam parametra kokinors, kuris taippat yra objektas
+
+    // function addition() {
+    //     var arr = [];
+    //     arr.push(car1, car2, car3);
+    //     console.log(arr);
+    //     for (let i = 0; i < arr.length; i++) {
+    //         arr[i].pavaruDeze = pavaruDeze;
+    //     }
+    //     console.log(arr);
+    // }
+
+    // addition();
+    arrayOfCars = [{
+        Marke: "Mercedes",
+        Modelis: "SL111",
+        Metai: 2015,
+        Spalva: "Pilka",
+        KuroSanaudos: 8.6,
+        KuroTipas: "Benzinas",
+    }, {
+        Marke: "Audi",
+        Modelis: "A4",
+        Metai: 2018,
+        Spalva: "Melyna",
+        KuroSanaudos: 7.2,
+        KuroTipas: "Dyzelinas"
+
+    }, {
+        Marke: "Fiat",
+        Modelis: "500",
+        Metai: 2012,
+        Spalva: "Zalia",
+        KuroSanaudos: 5.9,
+        KuroTipas: "Benzinas"
+    }, {
+        Marke: "Audi",
+        Modelis: 80,
+        Metai: 1987,
+        Spalva: "mėlyna",
+        KuroSanaudos: 9.2,
+        KuroTipas: "Benzinas",
+    }, {
+        Marke: "Ford",
+        Modelis: "Focus",
+        Metai: 1997,
+        Spalva: "žalia",
+        KuroSanaudos: 10.0,
+        KuroTipas: "Dujos",
+    }, {
+        Marke: "Volkswagen",
+        Modelis: "Passat",
+        Metai: 2005,
+        Spalva: "sidabrinė",
+        KuroSanaudos: 5.8,
+        KuroTipas: "Dyzelis",
+    }, {
+        Marke: "Toyota",
+        Modelis: "Corola",
+        Metai: 2007,
+        Spalva: "blue",
+        KuroSanaudos: 5,
+        KuroTipas: "Benzinas"
+    }, {
+        Marke: "Volvo",
+        Modelis: "S50",
+        Metai: 2012,
+        Spalva: "brown",
+        KuroSanaudos: 4,
+        KuroTipas: "Dyzelinas"
+    }, {
+        Marke: "Kia",
+        Modelis: "Ceed",
+        Metai: 2002,
+        Spalva: "Grey",
+        KuroSanaudos: 8,
+        KuroTipas: "Dujos"
+    }, {
+        Marke: "500",
+        Modelis: "fiat",
+        Metai: 2014,
+        Spalva: "balta",
+        KuroSanaudos: 7,
+        KuroTipas: "Benzinas"
+    }, {
+        Modelis: "Volkswagen",
+        Marke: "golf",
+        Metai: 2014,
+        Spalva: "balta",
+        KuroSanaudos: 6,
+        KuroTipas: "Dyzelinas"
+    }, {
+        Modelis: "Toyota",
+        Marke: "Sienna",
+        Metai: 2014,
+        Spalva: "bordo",
+        KuroSanaudos: 11,
+        KuroTipas: "Dujos"
+    }, {
+        Modelis: "BMW",
+        Marke: "420",
+        Metai: 2014,
+        Spalva: "juoda",
+        KuroSanaudos: 8,
+        KuroTipas: "Dyzelinas"
+    }, {
+        Marke: "Audi",
+        Modelis: "A6",
+        Metai: "2012",
+        Spalva: "Juoda",
+        KuroSanaudos: 7,
+        KuroTipas: "Dyzelinas"
+    }, {
+        Marke: "BMW",
+        Modelis: "5",
+        Metai: "2011",
+        Spalva: "Balta",
+        KuroSanaudos: 10,
+        KuroTipas: "Benzinas"
+    }, {
+        Marke: "Toyota",
+        Modelis: "Corolla",
+        Metai: "2019",
+        Spalva: "Raudona",
+        KuroSanaudos: 8,
+        KuroTipas: "Dujos"
+    }, {
+        Marke: "Mercedes Benz",
+        Modelis: "222",
+        Metai: "2020",
+        Spalva: "Juoda",
+        KuroSanaudos: 12,
+        KuroTipas: "Benzinas",
+    }];
 </script>
 
 </html>
