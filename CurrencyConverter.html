@@ -9,6 +9,11 @@
     <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
 </head>
 <style>
+    html,
+    body {
+        margin: 0px;
+    }
+    
     #line {
         align-items: center;
         justify-content: center;
@@ -16,66 +21,221 @@
     }
     
     #obj {
-        width: 800px;
-        margin-left: auto;
-        margin-right: auto;
+        width: 100%;
         text-align: center;
-        border: solid 1px;
+        height: 100vh;
+        margin-top: 40px;
     }
     
     #result {
-        width: 800px;
+        width: 200px;
         margin-left: auto;
         margin-right: auto;
         text-align: center;
+        font-size: 50px;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    #value {
+        display: block;
+        width: 200px;
+        height: 50px;
+        font-size: 40px;
+        text-align: center;
+        border: solid;
+        border-width: 0px 0px 2px 0px;
+        border-color: rgb(100, 100, 100);
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    #value:focus {
+        outline: none;
+    }
+    
+    .select {
+        margin-top: 10px;
+        width: 200px;
+        height: 65px;
+        border-radius: 5px;
         font-size: 20px;
+        text-align: center;
+        border: solid 1px black;
+        background-color: transparent;
+    }
+    
+    .select:focus {
+        background-color: rgb(236, 236, 236);
+    }
+    
+    #arrow {
+        margin-top: 60px;
+        font-size: 50px;
+        font-weight: 50;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    #center {
+        width: 800px;
+        height: 100vh;
+        border: solid;
+        border-width: 0px 3px 0px 0px;
+        border-color: rgb(200, 200, 200);
+    }
+    
+    #landingdisplay {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    #chartDiv {
+        width: 80%;
+        height: 35%;
+        margin: 10px auto;
+    }
+    
+    #placeholder {
+        font-size: 25px;
+        letter-spacing: 0.2em;
+    }
+    
+    h3 {
+        text-align: center;
+        letter-spacing: 0.05em;
+    }
+    
+    #answers {
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        height: 200px;
+        border-radius: 20px;
+        background-color: rgb(238, 238, 238);
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-bottom: 20px;
+    }
+    
+    #resulttext {
+        margin-top: -10px;
+    }
+    
+    .button-6 {
+        align-items: center;
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: .25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: rgba(0, 0, 0, 0.85);
+        cursor: pointer;
+        display: inline-flex;
+        font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.25;
+        min-height: 3rem;
+        padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: 300px;
+    }
+    
+    .button-6:focus {
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        color: rgba(0, 0, 0, 0.65);
+    }
+    
+    .button-6:hover {
+        transform: translateY(-1px);
+        font-size: 18px;
+    }
+    
+    .button-6:active {
+        background-color: #F0F0F1;
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+        color: rgba(0, 0, 0, 0.65);
+        transform: translateY(0);
+    }
+    
+    #btn {
+        display: block;
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-bottom: 10px;
     }
 </style>
 
 <body>
-    <h1> Plain Currency exchange, mate!</h1>
-    <div id="center">
-        <div id="line">
-            <input id="value">
-            <p>From:</p>
-            <select id="OrgCurrency"></select>
-            <p>To:</p>
-            <select id="NewCurrency"></select>
-            <button onclick="request()">Convert</button>
+    <div id="landingdisplay">
+        <div id="center">
+            <h1> Basic Currency exchange</h1>
+            <input id="value" placeholder="231">
+            <div id="line">
+                <select class="select" id="OrgCurrency"></select>
+                <p id="arrow">→</p>
+                <select class="select" id="NewCurrency"></select>
+            </div>
+            <div id="btn">
+                <button class="button-6" onclick="request()">Convert</button>
+            </div>
+            <div id="answers">
+                <h3>Converted value</h3>
+                <p id="result">0</p>
+                <p id="resulttext">0 in val1 is 0 in val2</p>
+            </div>
+        </div>
+        <div id="obj">
+            <label id='label'></label>
+            <div id="chartDiv"></div>
+            <p id="placeholder">A graph will be displayed here.</p>
         </div>
     </div>
-    <div>
-        <p id="result">Result here</p>
-    </div>
-    <div id="obj">
-        <label>Last 7 days in relation to dollar(US)</label>
-        <div id="chartDiv" style="width:98%; height:360px; margin:0 auto;"></div>
-    </div>
-
 </body>
 <script>
     // personal key
     const apiKey = "107f1870-9b17-11ec-9528-dd89decb0470";
 
     // url for latest values
-    const urlLatest = "https://freecurrencyapi.net/api/v2/latest?apikey=" + apiKey;
+    const urlLatest = 'https://api.currencyapi.com/v3/latest?apikey=107f1870-9b17-11ec-9528-dd89decb0470';
 
     // url for historical data
     var today = new Date().toISOString().slice(0, 10)
+    var xa = new Date();
     var seven = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     var sevenDaysAgo = seven.toISOString().slice(0, 10)
-    console.log(sevenDaysAgo);
-    const urlHistorical = `https://freecurrencyapi.net/api/v2/historical?apikey=${apiKey}&base_currency=USD&date_from=${sevenDaysAgo}&date_to=${today}`;
+    console.log(seven);
+    console.log(today);
+    var urlHistorical = `https://api.currencyapi.com/v3/range?apikey=${apiKey}&base_currency=USD&datetime_start=${sevenDaysAgo}&datetime_end=${today}`;
     var dataLatest;
 
 
     var dropbox1 = document.getElementById("OrgCurrency");
     var dropbox2 = document.getElementById("NewCurrency");
+    var placeholder = document.getElementById("placeholder");
+    var chartDiv = document.getElementById("chartDiv");
+
     var names = [];
     var historical;
     var latest;
     var result = document.getElementById('result');
+    var resultMINI = document.getElementById('resulttext');
     var input = document.getElementById('value');
+    var label = document.getElementById('label');
     var z = [];
     var v = [];
 
@@ -138,26 +298,34 @@
         var e1 = document.getElementById("NewCurrency");
         var newCurrencyval = e1.value;
         //Calculations
-        var exchangeRate = (1 / latest[orgCurrencyval]) / (1 / latest[newCurrencyval]);
+        var exchangeRate = (1 / latest[orgCurrencyval]['value']) / (1 / latest[newCurrencyval]['value']);
         var conversion = input.value * exchangeRate;
         //Display conversion
         result.innerText = conversion.toFixed(2);
+        resultMINI.innerText = `${input.value} ${orgCurrencyval} is ${conversion.toFixed(2)} ${newCurrencyval}`;
 
+        z = [];
+        v = [];
+        var str;
         //Create a chart for the dropbox2 currency
-
         //pulls numerical values from the object for specified value
-        z = Object.getOwnPropertyNames(historical);
-        v = Object.entries(historical).map(([key, value]) => value[newCurrencyval]);
-
+        for (let i = 0; i < 7; i++) {
+            str = historical[i]['datetime']
+            z.push(str.substr(0, 10));
+            v.push(historical[i]['currencies'][newCurrencyval]['value']);
+        }
+        console.log(v);
         var arr23 = [];
         var obj = {}
-            //translate values to array with objects
-        for (let i = 0; i < z.length; i++) {
+        console.log(historical);
+        //translate values to array with objects
+        for (let i = 0; i < (z.length); i++) {
             obj = {}
             obj['date'] = z[i];
             obj['val'] = v[i];
             arr23.push(obj);
         }
+        console.log(arr23);
         //convert to x and y values
         var series = JSC.nest()
             .key('date') // X values
@@ -165,6 +333,9 @@
             .series(arr23); // Generate series
 
         //draw chart
+        placeholder.style.display = 'none';
+        chartDiv.style.height = '65%';
+        label.innerText = `Last 7 days of ${newCurrencyval} in relation to dollar(US)`;
         var chart = JSC.chart('chartDiv', {
             type: 'vertical line',
             defaultBox_boxVisible: false,
@@ -182,6 +353,7 @@
                 }]
             }
         });
+
     }
 </script>
 
