@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+    <title>22-03-12</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="main" class="card card-body">
+            <h2 class="title">Add Items</h2>
+            <form id='thisform' class="form-inline mb-3">
+                <input id='input' type="text" class="form-control mr-2" />
+                <input id='btn' type="submit" class="btn btn-dark" value="submit" onclick="adder()" />
+            </form>
+            <h2 class="title">Items</h2>
+            <ul id="items" class="list-group">
+                <li class="list-group-item"><a>Item 1</a></li>
+                <li class="list-group-item">Item 2</li>
+                <li class="list-group-item">Item 3</li>
+                <li class="list-group-item">Item 4</li>
+                <li class="list-group-item">Item 5</li>
+                <li class="list-group-item">Item 6</li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    //2. uzduotis Padaryti funkcionaluma, kad ivedus teksta i prie "Add Items" laukelio ir paspaudus submit,
+    //i apacioja esanti UL sarasa, prisidetu nauja LI elementas su tekstu atitinkanciu, tai ka ivedete tekstbox'e
+
+
+
+
+    function adder() {
+        var list = document.getElementById('items');
+        var item = document.getElementById('input').value;
+        var li = document.createElement("li");
+        li.classList.add('list-group-item');
+        li.appendChild(document.createTextNode(item));
+        list.appendChild(li);
+        createbuttons();
+    }
+    var form = document.getElementById("thisform");
+
+    //prevents sumbit form from reloading page
+    function handleForm(event) {
+        event.preventDefault();
+    }
+    form.addEventListener('submit', handleForm);
+
+    //3. uzduotis prie kiekvieno LI elemento prideti mygtuka kuri paspaudus, tas elementas issitrintu is UL saraso.
+
+    function createbuttons() {
+        var listSize = document.querySelectorAll("#items li").length
+
+        //gets a list of li elements
+        var lis = document.getElementById("items").getElementsByTagName("li");
+
+        for (let i = 0; i < listSize; i++) {
+            //button element
+            let btn = document.createElement("button");
+            btn.innerHTML = "X";
+            btn.style.display = 'block';
+            btn.style.position = 'relative';
+            btn.style.float = 'right';
+            btn.onclick = function() {
+                this.parentNode.remove(lis[i]);
+            };
+
+            //adds button to first list element
+            if (lis[0].childElementCount <= 1) {
+                lis[0].appendChild(btn);
+            }
+            //adds button to the rest of list elements
+            if (lis[i].childElementCount < 1) {
+                lis[i].appendChild(btn);
+            }
+        }
+        console.log(lis[1].childElementCount);
+    }
+    createbuttons();
+</script>
+
+
+</html>

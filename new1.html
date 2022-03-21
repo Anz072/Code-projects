@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+    <title>22-03-12 Pirma uzduotis</title>
+</head>
+
+<body>
+    <div class="card" style="height: 400px; width: 600px; padding-top: 100px; padding-left: 120px; padding-right: 120px; margin: auto; margin-top: 100px;">
+        <div id="loginpage">
+            <input type="text" class="form-control mb-2 mr-sm-2" id="nameInput" placeholder="Jusu vardas">
+            <button type="button" id="logInButton" class="btn btn-primary" onclick="checkLogIn()">Prisijungti</button>
+        </div>
+        <div id='inside'>
+            <p id="greetingField"></p>
+            <button type="button" id="logInButton" class="btn btn-primary" onclick="Logout()">Atsijungti</button>
+        </div>
+
+    </div>
+
+    <script>
+        var namebox = document.getElementById('nameInput');
+        var field = document.getElementById('greetingField');
+        var loginpage = document.getElementById('loginpage');
+        namebox.innerText = '';
+        var inside = document.getElementById('inside');
+
+        function start() {
+            localStorage.getItem("username");
+            if (localStorage.getItem("username") != null) {
+                loginpage.style.display = 'none';
+                inside.style.display = 'block';
+                name = localStorage.getItem('username');
+                field.innerHTML = `Hello & welcome ${name}!`;
+            } else {
+                loginpage.style.display = 'block';
+                inside.style.display = 'none';
+            }
+            console.log(localStorage.getItem("username"));
+        }
+
+        start();
+
+        function checkLogIn() {
+            var name = namebox.value;
+            if (name !== '') {
+                loginpage.style.display = 'none';
+                inside.style.display = 'block';
+                field.innerHTML = `Hello & welcome ${name}!`;
+                localStorage.setItem("username", name);
+                document.cookie = `username=${name}`;
+            } else {
+                field.innerText = `I can't greet someone without a name!`;
+            }
+        }
+        console.log(document.cookie);
+
+        function Logout() {
+            localStorage.clear();
+            loginpage.style.display = 'block';
+            inside.style.display = 'none';
+        }
+
+
+        async function apiCall() {
+            // Create request object
+
+            var request = new Request('https://catfact.ninja/facts?max_length=500&limit=10', {
+
+                method: 'GET',
+
+                headers: new Headers({
+
+                    'Content-Type': 'application/json'
+
+                })
+
+            });
+
+            fetch(request)
+                .then(response => {
+
+                    console.log(response);
+
+                    return response.json();
+
+                }) //Responco objecktas ir ka su juo darome
+
+            .then(json => catFact = json) // kai is receponco gauname .Json() priskiriami ji savo kintamajui
+
+            .catch(error => console.error(error)) // Catch isskivies esant errorui
+
+            .finally(() => { //finally issikvies paciam gale po  visko
+                // for (let i = 0; i <= 9; i++) {
+                //     console.log(catFact.data[i].fact);
+                // }
+
+                typeof(catFact.data.fact);
+
+            });
+        }
+
+        apiCall();
+    </script>
+</body>
+
+</html>

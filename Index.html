@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<style>
+    .center {
+        margin: 5rem auto 0px auto;
+    }
+    
+    #loginTop {
+        margin-top: 0rem;
+        margin-left: -2.5%;
+        width: 105%;
+        padding-bottom: 20px;
+        border: solid;
+        border-width: 0px 0px 1px 0px;
+        border-color: black;
+        font-size: 30px;
+        letter-spacing: 0.2rem;
+        font-weight: 600;
+    }
+    
+    .card2e {
+        display: block;
+        width: 60%;
+        height: 80vh;
+        border: solid;
+    }
+    
+    #chatroom {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .flex-item1 {
+        width: 40px;
+        height: 200px;
+    }
+    
+    #sidebar {
+        width: 30%;
+        border: solid;
+        border-width: 0px 1px 0px 0px;
+        border-color: rgb(209, 209, 209);
+    }
+    
+    #general {
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+        background-color: blue;
+    }
+    
+    #generalChat {
+        flex-grow: 5;
+        background-color: rgb(245, 245, 245);
+    }
+    
+    #generalUser {
+        position: relative;
+        flex-grow: 1;
+        background-color: rgb(230, 230, 230);
+    }
+    
+    #searchbar {
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+    }
+    
+    hr.new4 {
+        margin-top: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid;
+        border-color: rgb(209, 209, 209);
+        width: 95%;
+    }
+    
+    p {
+        text-align: center;
+    }
+    
+    #typeText {
+        position: absolute;
+        bottom: 20px;
+    }
+    
+    #chatlog {
+        width: 620px;
+        height: 500px;
+        position: fixed;
+        margin-left: auto;
+        margin-right: auto;
+        overflow-y: auto;
+        display: table-cell;
+        vertical-align: bottom;
+    }
+    
+    #textElement {
+        border: solid;
+        border-width: 1px;
+        border-radius: 5px;
+        border-color: rgb(200, 200, 200);
+        text-align: right;
+        padding: 5px;
+        background-color: white;
+    }
+</style>
+
+<body>
+    <div id='loginform' class="card center" style="width: 20rem; height: 20rem;">
+        <div class="card-body">
+            <h5 id='loginTop' class="card-title" style="text-align: center;">Login</h5>
+            <form>
+                <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; text-align: center; font-size: 18px;">Pick a username</h5>
+
+                <div class="form-outline mb-4">
+                    <input id="username" class="form-control form-control-lg" />
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" onclick="login()">Take me to the chat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id='chatroomDisplay' class="card2e center">
+        <div id="chatroom">
+            <div id="sidebar">
+                <h5 style="text-align: center;">Online</h5>
+                <form class="form-inline my-2 my-lg-0">
+                    <input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                </form>
+                <hr class="new4">
+                <div id="usernameList">
+                </div>
+            </div>
+            <div id="general">
+                <div id="generalChat">
+                    <div id="chatlog">
+                    </div>
+                </div>
+                <div id="generalUser">
+                    <div class="form-outline" id="userInput">
+                        <input type="text" placeholder="Send a message" id="typeText" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var usernameform = document.getElementById('username');
+    var loginBox = document.getElementById('loginform');
+
+
+    var loginBox = document.getElementById('loginform');
+    var chatroom = document.getElementById('chatroomDisplay');
+    var usernameList = document.getElementById('usernameList');
+    var chat = document.getElementById('chatlog');
+    var typeText = document.getElementById('typeText');
+
+    var username = '';
+    loginBox.style.display = 'block';
+    chatroom.style.display = 'none';
+
+    function login() {
+        username = usernameform.value;
+        if (username != '') {
+            loginBox.style.display = 'none';
+            chatroom.style.display = 'block';
+            adduser();
+            localStorage.setItem("Username", username);
+        }
+    }
+
+    function adduser() {
+        var tag = document.createElement("p");
+        var text = document.createTextNode(username);
+        tag.appendChild(text);
+        usernameList.appendChild(tag);
+    }
+
+    function sendMessage() {
+        var tag = document.createElement("p");
+        tag.setAttribute("id", "textElement");
+        var text = document.createTextNode(typeText.value);
+        tag.appendChild(text);
+        chat.appendChild(tag);
+        typeText.value = '';
+    }
+
+    document.onkeydown = function(e) {
+        var keyCode = e.keyCode;
+        if (keyCode === 13) {
+            sendMessage();
+        }
+    }
+</script>
+
+</html>
